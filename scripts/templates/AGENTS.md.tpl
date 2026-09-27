@@ -1,15 +1,15 @@
-# 我的 DSH 背包 (My DSH Inventory) AGENTS.md
+# {{TITLE}} AGENTS.md
 
 ## 目标
 
-模仿《星露谷物语》(Stardew Valley) 背包（Inventory）系统，展示个人自研的 DSH 插件、全域 Agent 技能、MCP 服务器和踩坑经验典籍。
+模仿《星露谷物语》(Stardew Valley) 背包（Inventory）系统，展示 {{NAME}} 的插件、技能、MCP 服务器和踩坑经验典籍。
 坚持轻量级、零外部重库、纯手绘 16×16 原生像素艺术与 Web Audio 8-bit 声效。
 
 ## 地图
 
 - `config/harness.yaml`: 站点唯一事实源（站点信息、harness 档案、sections/物品全量数据），schema 见 `src/config/schema.ts`；`config/harness.example.yaml`: 白板模板（全注释，init-harness 的替换源）
 - `config/content/<section>/<id>.md`: 物品深度解析正文（Markdown）；`config/icons/*.svg`: 自定义 16×16 像素图腾
-- `skills/harness-inventory/`: 配套 agent skill（SKILL.md 十步流程 + references/ 配置·隐私·图标·发布·各家 harness 采集指南 + scripts/collect-stats.mjs 统一采集器（dsh/claude-code/codex 全量，其余探测指引；重测后回填 harness.yaml））
+- `skills/harness-inventory/`: 配套 agent skill（SKILL.md 十步流程 + references/ 配置·隐私·图标·发布·各家 harness 采集指南 + scripts/collect-stats.mjs 统一采集器）
 - `docs/essays/`: 已归档的长文典籍（不在站内展示）
 - `src/config/loader.ts`: 浏览器侧装载（YAML + 正文 glob + IconRef 解析链 custom-svg → custom-img → kit → fallback + harness 档案派生）
 - `src/components/ItemIcon.tsx`: 统一图腾渲染器与品质星级徽章
@@ -23,20 +23,20 @@
 - `src/assets/fonts/`: 主题像素字体（DotGothic16/PKMN/Fusion Pixel/Cinzel/Pirata One，许可文本与清单见其 README.md）
 - `src/badge/`: 游戏名片纯函数与四主题规格（480×160 SVG；fonts/ 为 ASCII 拉丁字体子集，data-URI 内嵌进 badge）
 - `scripts/gen-badges.ts`: badge/favicon 生成器（predev/prebuild 钩子 → `public/badges/*.svg` + `badge.svg`（随 site.theme）+ `favicon.svg`（品牌头像））
-- `src/stats/level.ts`: 等级与经验纯函数（对数压缩公式，5 锚点校准，`tests/level.test.ts`）
-- `src/brands/`: 品牌 16×16 像素头像（`tools/gen-brands.mjs` 字符画生成；dsh/claude-code/... /generic 兜底）
+- `src/stats/level.ts`: 等级与经验纯函数（对数压缩公式，锚点校准，`tests/level.test.ts`）
+- `src/brands/`: 品牌 16×16 像素头像（dsh/claude-code/... /generic 兜底）
 - `src/audio/retroAudio.ts`: 纯原生 Web Audio API 8-bit 声效合成器（木击、拾取、金币、翻书）
 - `src/index.css`: 星露谷调色板、像素微阴影系统与独立滚动条样式
 - `src/App.tsx`: 顶层 HUD 框架（Lv 徽章/金币/音效/档案入口）、Tab 导航（由 sections 驱动）与 hash 路由
 - `scripts/validate.ts` / `pnpm validate`: 配置校验（schema + 正文/图标引用完整性）
-- `scripts/init-harness.mjs` / `pnpm init:harness`: 白板初始化（清空 config 内容、重置 harness.yaml/package.json name/index.html/README 标题）
+- `scripts/init-harness.mjs` / `pnpm init:harness`: 白板初始化（清空 config 内容、重置 harness.yaml/README/AGENTS、删除 docs 历史文档）
 - `scripts/privacy-scan.mjs` / `pnpm privacy:scan`: 全仓隐私扫描（硬模式密钥阻断 exit 1，软模式域名/IP/路径警告；豁免清单 `.privacy-allow`）
 
 ## 开发与调试
 
 ```bash
 # 启动本地开发服务 (支持 HMR，配置改动热校验)
-pnpm dev --host 0.0.0.0 --port 5180
+pnpm dev
 
 # 配置校验（改 harness.yaml / content / icons 后必跑；build 也会跑）
 pnpm validate
@@ -45,10 +45,7 @@ pnpm validate
 pnpm build
 
 # 预览构建产物
-pnpm preview --host 0.0.0.0 --port 5180
-
-# 临时公网穿透演示 (开隧道给用户体验)
-bash ~/.agents/skills/dev-tunnel/scripts/dev-tunnel.sh 5180
+pnpm preview
 ```
 
 ## 规范
